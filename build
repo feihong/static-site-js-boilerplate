@@ -1,0 +1,5 @@
+#!/bin/bash
+browserify --debug --no-bundle-external \
+  site/$1/app.js \
+  -o site/$1/bundle.js \
+  -t babelify

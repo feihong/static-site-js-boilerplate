@@ -1,0 +1,11 @@
+<%!
+    title = 'Example'
+%>
+<%inherit file="base.html"/>
+
+<h1>${self.attr.title}</h1>
+
+${next.body()}
+
+<script src='${site}js/lib-bundle.js'></script>
+<script src='bundle.js'></script>

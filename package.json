@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "babel-preset-es2015": "latest",
+    "babel-preset-react": "latest",
+    "babelify": "latest",
+    "lodash": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "underscore.string": "latest"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  }
+}
