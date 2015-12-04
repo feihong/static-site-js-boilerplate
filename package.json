@@ -7,11 +7,5 @@
     "react": "latest",
     "react-dom": "latest",
     "underscore.string": "latest"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
   }
 }
