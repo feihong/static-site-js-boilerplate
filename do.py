@@ -8,7 +8,10 @@ from livereload.watcher import Watcher
 
 
 SITE = '/javascript-examples/'
-
+IMPORTS = [
+    'from markdown2 import markdown',
+    'from docutils.core import publish_parts; rst = lambda s: publish_parts(s, writer_name="html")["html_body"]'
+]
 
 lookup = TemplateLookup(directories=['templates'])
 
@@ -26,7 +29,7 @@ def generate(path=''):
     if not file_.endswith('.html'):
         return bottle.static_file(path, root='site')
 
-    template = Template(open(file_).read(), lookup=lookup)
+    template = Template(open(file_).read(), lookup=lookup, imports=IMPORTS)
     return template.render(site=SITE)
 
 

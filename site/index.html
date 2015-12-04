@@ -4,7 +4,6 @@
 <%inherit file="base.html" />
 
 <%
-
 import re
 
 examples = """
@@ -12,10 +11,20 @@ helloworld  Hello World
 flexbox  Flexbox
 """
 examples = (re.split(r'\s+', ex, 1) for ex in examples.strip().splitlines())
-
 %>
 
 <h1>Home</h1>
+
+<%block filter="rst">
+**This** was *rendered* using `reStructuredText <https://en.wikipedia.org/wiki/ReStructuredText>`_.
+</%block>
+
+<%block filter="markdown">
+*This* was **rendered** using [Markdown](https://en.wikipedia.org/wiki/Markdown).
+
+Be sure to check out my [React JS](http://facebook.github.io/react/) examples!
+</%block>
+
 
 <h2>Examples</h2>
 
