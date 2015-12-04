@@ -22,7 +22,8 @@ function renderBox(isHorizontal, props) {
   let newStyle = Object.assign({}, props.style)
   Object.assign(newStyle, {
     display: 'flex',
-    flexDirection: isHorizontal ? 'row' : 'column'})
+    flexDirection: isHorizontal ? 'row' : 'column'
+  })
 
   return <div {...props} className={className} style={newStyle}>
     {props.children}
