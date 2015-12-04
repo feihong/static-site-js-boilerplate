@@ -3,6 +3,8 @@ import urlparse
 from mako.template import Template
 from mako.lookup import TemplateLookup
 import bottle
+from livereload import Server
+from livereload.watcher import Watcher
 
 
 SITE = '/javascript-examples/'
@@ -39,5 +41,9 @@ def get_file(path):
     return 'site/404.html'
 
 if __name__ == '__main__':
-    bottle.debug(True)
-    bottle.run(app, host='localhost', port=8000, reloader=True)
+    # bottle.debug(True)
+    # bottle.run(app, host='localhost', port=8000, reloader=True)
+    watcher = Watcher()
+    watcher.watch('site', ignore=lambda p: p.endswith('.babel'))
+    server = Server(app, watcher)
+    server.serve(port=8000)
