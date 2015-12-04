@@ -19,8 +19,6 @@ def index():
 @app.route(SITE)
 @app.route(SITE + '<path:path>')
 def generate(path=''):
-    # import ipdb; ipdb.set_trace()
-
     file_ = get_file(path)
 
     if not file_.endswith('.html'):

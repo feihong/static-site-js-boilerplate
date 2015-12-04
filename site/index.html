@@ -1,6 +1,28 @@
 <%!
-    title = 'Home'
+  title = 'Home'
 %>
 <%inherit file="base.html" />
 
-<a href='flexbox/'>Flexbox</a>
+<%
+
+import re
+
+examples = """
+helloworld  Hello World
+flexbox  Flexbox
+"""
+examples = (re.split(r'\s+', ex, 1) for ex in examples.strip().splitlines())
+
+%>
+
+<h1>Home</h1>
+
+<h2>Examples</h2>
+
+<ul>
+% for key, name in examples:
+  <li>
+    <a href='${key}/'>${name}</a>
+  </li>
+% endfor
+</ul>
