@@ -16,7 +16,7 @@ class HelloWorld extends BaseComponent {
     return <div>
       <span style={{color: 'red', fontWeight: 'bold'}}>Hello</span>
       &nbsp;
-      <span style={{color: 'blue', textDecoration: 'underline'}}>World</span>!
+      <span style={{color: 'green', textDecoration: 'underline'}}>World</span>!
       <br />
       <button onClick={this.handleClick}>Click me</button>
       {this.state.show && bigGreeting}

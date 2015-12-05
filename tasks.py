@@ -28,8 +28,7 @@ def page(path=''):
     file_ = get_file(path)
     if not file_.endswith('.html'):
         return bottle.static_file(path, root='site')
-    template = Template(open(file_).read(), lookup=lookup, imports=IMPORTS)
-    return template.render(site=SITE)
+    return generate(file_)
 
 
 @task
@@ -45,10 +44,12 @@ def serve():
 
 @task
 def build():
+    clean()
     for src in Path('site').rglob('*?.*'):
         dest = Path('build') / src.relative_to('site')
         print dest
-        copy(src, dest)
+        copy_or_generate(src, dest)
+
 
 @task
 def clean():
@@ -95,8 +96,17 @@ def get_file(path):
     return 'site/404.html'
 
 
-def copy(src, dest):
+def generate(path):
+    template = Template(open(path).read(), lookup=lookup, imports=IMPORTS)
+    return template.render(site=SITE)
+
+
+def copy_or_generate(src, dest):
     import shutil
     if not dest.exists():
         dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy(str(src), str(dest))
+    if src.suffix == '.html':
+        with dest.open('w') as fp:
+            fp.write(generate(str(src)))
+    else:
+        shutil.copy(str(src), str(dest))
