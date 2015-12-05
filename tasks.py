@@ -72,7 +72,12 @@ def buildjs(name):
 
 @task
 def watchjs(name):
-    pass
+    run("""watchify --debug --no-bundle-external --extension=.babel \
+      site/%(name)s/app.babel \
+      -o site/%(name)s/bundle.js \
+      -t [ babelify --extensions .babel --presets [ es2015 react ] ] \
+      -v
+    """ % {'name': name})
 
 
 def get_file(path):
