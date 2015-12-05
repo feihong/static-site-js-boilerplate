@@ -1,13 +1,9 @@
-import os
 import os.path as op
-import shutil
-from subprocess import Popen, PIPE
 from mako.template import Template
 from mako.lookup import TemplateLookup
 import bottle
-from livereload import Server
-from livereload.watcher import Watcher
 from invoke import run, task
+from pathlib2 import Path
 
 
 SITE = '/javascript-examples/'
@@ -38,8 +34,8 @@ def page(path=''):
 
 @task
 def serve():
-    # bottle.debug(True)
-    # bottle.run(app, host='localhost', port=8000, reloader=True)
+    from livereload import Server
+    from livereload.watcher import Watcher
     watcher = Watcher()
     watcher.watch('site', ignore=lambda p: p.endswith('.babel'))
     watcher.watch('templates')
@@ -49,10 +45,15 @@ def serve():
 
 @task
 def build():
-    for root, dirs, files in os.walk('site'):
-        for file_ in files:
-            print op.join(root, file_)
+    for src in Path('site').rglob('*?.*'):
+        dest = Path('build') / src.relative_to('site')
+        print dest
+        copy(src, dest)
 
+@task
+def clean():
+    if op.isdir('build'):
+        run('rm -rf build/*')
 
 @task
 def buildjs(name):
@@ -80,6 +81,11 @@ def watchjs(name):
     """ % {'name': name})
 
 
+@task
+def publish():
+    pass
+
+
 def get_file(path):
     result = op.join('site', path)
     if op.isfile(result):
@@ -87,3 +93,10 @@ def get_file(path):
     if op.isdir(result) and op.isfile(op.join(result, 'index.html')):
         return op.join(result, 'index.html')
     return 'site/404.html'
+
+
+def copy(src, dest):
+    import shutil
+    if not dest.exists():
+        dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(str(src), str(dest))

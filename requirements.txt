@@ -4,3 +4,4 @@ invoke
 livereload
 Mako
 markdown2
+pathlib2
