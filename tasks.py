@@ -47,11 +47,32 @@ def serve():
     server.serve(port=8000)
 
 
-@task()
+@task
 def build():
     for root, dirs, files in os.walk('site'):
         for file_ in files:
             print op.join(root, file_)
+
+
+@task
+def buildjs(name):
+    if name == 'lib':
+        run("""browserify \
+          -r lodash -r underscore.string \
+          -r react -r react-dom \
+          -o site/js/lib-bundle.js
+        """)
+    else:
+        run("""browserify --debug --no-bundle-external --extension=.babel \
+          site/%(name)s/app.babel \
+          -o site/%(name)s/bundle.js \
+          -t [ babelify --extensions .babel --presets [ es2015 react ] ]
+        """ % {'name': name})
+
+
+@task
+def watchjs(name):
+    pass
 
 
 def get_file(path):

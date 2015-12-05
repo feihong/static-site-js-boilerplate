@@ -1,5 +1,0 @@
-#!/bin/bash
-browserify \
-  -r lodash -r underscore.string \
-  -r react -r react-dom \
-  -o site/js/lib-bundle.js
