@@ -6,7 +6,7 @@ from invoke import run, task
 from pathlib2 import Path
 
 
-SITE = '/javascript-examples/'
+SITE = '/static-site-js-boilerplate/'
 IMPORTS = [
     'from markdown2 import markdown',
     'from docutils.core import publish_parts; rst = lambda s: publish_parts(s, writer_name="html")["html_body"]'
@@ -56,6 +56,7 @@ def clean():
     if op.isdir('build'):
         run('rm -rf build/*')
 
+
 @task
 def buildjs(name):
     if name == 'lib':
@@ -84,7 +85,8 @@ def watchjs(name):
 
 @task
 def publish():
-    pass
+    build()
+    run('ghp-import -n -p build')
 
 
 def get_file(path):
