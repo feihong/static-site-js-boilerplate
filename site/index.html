@@ -3,15 +3,7 @@
 %>
 <%inherit file="base.html" />
 
-<%
-import re
-
-examples = """
-helloworld  Hello World
-flexbox  Flexbox
-"""
-examples = (re.split(r'\s+', ex, 1) for ex in examples.strip().splitlines())
-%>
+<%namespace name="helper" file="helper.html" />
 
 <h1>Home</h1>
 
@@ -28,10 +20,7 @@ Be sure to check out my [React JS](http://facebook.github.io/react/) examples!
 
 <h2>Examples</h2>
 
-<ul>
-% for key, name in examples:
-  <li>
-    <a href='${key}/'>${name}</a>
-  </li>
-% endfor
-</ul>
+<%helper:pagelist>
+  helloworld; Hello World
+  flexbox; Flexbox
+</%helper:pagelist>
