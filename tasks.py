@@ -8,8 +8,7 @@ from pathlib2 import Path
 
 SITE = '/static-site-js-boilerplate/'
 IMPORTS = [
-    'from markdown2 import markdown',
-    'from docutils.core import publish_parts; rst = lambda s: publish_parts(s, writer_name="html")["html_body"]'
+    'from filters import markdown, rst'
 ]
 
 lookup = TemplateLookup(directories=['templates'])
