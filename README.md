@@ -1,3 +1,10 @@
-# static-site-proto
+# Static Site Boilerplate (JavaScript Version)
 
-Prototype for a static site generator
+This is a boilerplate project for creating a static site that uses a lot of JavaScript.
+
+Install dependencies:
+
+```
+pip install -r requirements.txt
+npm install -g webpack
+```

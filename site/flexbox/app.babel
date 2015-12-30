@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {HBox, VBox} from '../lib/flexbox'
+import {HBox, VBox} from 'lib/flexbox'
 
 
 ReactDOM.render(

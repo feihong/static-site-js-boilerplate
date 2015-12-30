@@ -44,8 +44,12 @@ def serve():
 @task
 def build():
     clean()
+    buildjs()
     for src in Path('site').rglob('*?.*'):
         dest = Path('build') / src.relative_to('site')
+        # The sourcemap files are useless in production.
+        if dest.suffix == '.map':
+            continue
         print dest
         copy_or_generate(src, dest)
 
@@ -57,29 +61,13 @@ def clean():
 
 
 @task
-def buildjs(name):
-    if name == 'lib':
-        run("""browserify \
-          -r lodash -r underscore.string \
-          -r react -r react-dom \
-          -o site/js/lib-bundle.js
-        """)
-    else:
-        run("""browserify --debug --no-bundle-external --extension=.babel \
-          site/%(name)s/app.babel \
-          -o site/%(name)s/bundle.js \
-          -t [ babelify --extensions .babel --presets [ es2015 react ] ]
-        """ % {'name': name})
+def buildjs():
+    run('webpack --progress --colors --optimize-minimize')
 
 
 @task
-def watchjs(name):
-    run("""watchify --debug --no-bundle-external --extension=.babel \
-      site/%(name)s/app.babel \
-      -o site/%(name)s/bundle.js \
-      -t [ babelify --extensions .babel --presets [ es2015 react ] ] \
-      -v
-    """ % {'name': name})
+def watchjs():
+    run('webpack --progress --colors -d --watch')
 
 
 @task
