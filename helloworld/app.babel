@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {BaseComponent} from '../lib/helper'
+import {BaseComponent} from 'lib/helper'
 
 
 class HelloWorld extends BaseComponent {
@@ -14,9 +14,9 @@ class HelloWorld extends BaseComponent {
     let bigGreeting = <div style={{fontSize: '5em', color: 'goldenrod'}}>你好世界！</div>
 
     return <div>
-      <span style={{color: 'red', fontWeight: 'bold'}}>Hello</span>
+      <span style={{backgroundColor: 'lightsalmon', fontWeight: 'bold'}}>Hello</span>
       &nbsp;
-      <span style={{color: 'green', textDecoration: 'underline'}}>World</span>!
+      <span style={{backgroundColor: 'palegreen', textDecoration: 'underline'}}>World</span>!
       <br />
       <button onClick={this.handleClick}>Click me</button>
       {this.state.show && bigGreeting}
