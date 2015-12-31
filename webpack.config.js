@@ -3,10 +3,10 @@ const webpack = require('webpack')
 
 
 module.exports = {
-  // Add new entry points here.
   entry: {
     helloworld: './site/helloworld/app.babel.js',
     flexbox: './site/flexbox/app.babel.js',
+    // This comment marks where new entry points will be added
     vendor: ['react', 'react-dom'],
   },
   output: {

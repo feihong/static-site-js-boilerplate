@@ -105,7 +105,7 @@ ReactDOM.render(
 
 @task
 def new_page():
-    from string import Template     # Not Mako templates
+    from string import Template     # Use Python templates, not Mako templates
 
     slug = raw_input('Slug for page: ')
     title = raw_input('Title of page: ')
@@ -127,6 +127,13 @@ def new_page():
         class_name = ''.join(s.capitalize() for s in title.split(' '))
         fp.write(Template(NEW_PAGE_JS_TEMPLATE).substitute(
             title=title, class_name=class_name))
+
+    marker = '// This comment marks where new entry points will be added'
+    new_entry = "'%s': './site/%s/app.babel.js'," % (slug, slug)
+    code = open('webpack.config.js').read()
+    with open('webpack.config.js', 'w') as fp:
+        fp.write(code.replace(marker, new_entry + '\n    ' + marker))
+
 
 
 def get_file(path):
