@@ -2,22 +2,13 @@ const path = require('path')
 const webpack = require('webpack')
 
 
-// All apps that need to be built by WebPack are listed here.
-const APPS = [
-  'helloworld',
-  'flexbox',
-]
-var entry = APPS.reduce((result, app) => {
-  result[app] = `./site/${app}/app.babel`
-  return result
-}, {})
-entry.vendor = [
-  'react',
-  'react-dom',
-]
-
 module.exports = {
-  entry: entry,
+  // Add new entry points here.
+  entry: {
+    helloworld: './site/helloworld/app.babel.js',
+    flexbox: './site/flexbox/app.babel.js',
+    vendor: ['react', 'react-dom'],
+  },
   output: {
     path: path.resolve('site'),
     filename: '[name]/bundle.js'
@@ -29,12 +20,12 @@ module.exports = {
     alias: {
       lib: path.resolve('site/lib')
     },
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.babel']
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.babel.js']
   },
   module: {
     loaders: [
       {
-        test: /\.babel$/,
+        test: /\.babel\.js$/,
         include: [
           path.resolve('site')
         ],
