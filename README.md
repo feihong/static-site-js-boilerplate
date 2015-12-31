@@ -31,3 +31,4 @@ npm install
 - `invoke buildjs` - Only generate the JS files, using webpack
 - `invoke watchjs` - Start a process that watches .babel.js files and compiles them, with debugging support
 - `invoke publish` - Changes in the build directory are committed and pushed to the gh-pages branch
+- `invoke new_page` - Add a new page to the site directory (also adds new entry to webpack config file)
