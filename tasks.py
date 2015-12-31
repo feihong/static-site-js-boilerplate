@@ -6,6 +6,7 @@ from invoke import run, task
 from pathlib2 import Path
 
 
+GITHUB_USER = 'feihong'
 SITE = '/static-site-js-boilerplate/'
 IMPORTS = [
     'from filters import markdown, rst'
@@ -147,7 +148,7 @@ def get_file(path):
 
 def generate(path):
     template = Template(open(path).read(), lookup=lookup, imports=IMPORTS)
-    return template.render(site=SITE)
+    return template.render(site=SITE, user=GITHUB_USER)
 
 
 def copy_or_generate(src, dest):
