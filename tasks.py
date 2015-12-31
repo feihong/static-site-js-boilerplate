@@ -35,7 +35,7 @@ def serve():
     from livereload import Server
     from livereload.watcher import Watcher
     watcher = Watcher()
-    watcher.watch('site', ignore=lambda p: p.endswith('.babel'))
+    watcher.watch('site', ignore=lambda p: p.endswith('.babel.js'))
     watcher.watch('templates')
     server = Server(app, watcher)
     server.serve(port=8000)
