@@ -76,6 +76,59 @@ def publish():
     run('ghp-import -n -p build')
 
 
+NEW_PAGE_HTML_TEMPLATE = u"""\
+<%!
+    title = ${title}
+%>
+<%inherit file='${template}' />
+
+<div id='content'></div>
+"""
+
+NEW_PAGE_JS_TEMPLATE = u"""\
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {BaseComponent} from 'lib/helper'
+
+class ${class_name} extends BaseComponent {
+  render() {
+    return <div>${title}</div>
+  }
+}
+
+ReactDOM.render(
+  <${class_name} />,
+  document.getElementById('content')
+)
+"""
+
+
+@task
+def new_page():
+    from string import Template     # Not Mako templates
+
+    slug = raw_input('Slug for page: ')
+    title = raw_input('Title of page: ')
+    template = raw_input('Template to inherit from (default is example.html): ')
+
+    new_dir = Path('site') / slug
+    if new_dir.exists():
+        print '\nDirectory %s already exists, aborting' % new_dir
+        return
+    new_dir.mkdir()
+
+    html_file = new_dir / 'index.html'
+    with html_file.open('w') as fp:
+        fp.write(Template(NEW_PAGE_HTML_TEMPLATE).substitute(
+            title=repr(title.strip()), template=template.strip() or 'example.html'))
+
+    js_file = new_dir / 'app.babel.js'
+    with js_file.open('w') as fp:
+        class_name = ''.join(s.capitalize() for s in title.split(' '))
+        fp.write(Template(NEW_PAGE_JS_TEMPLATE).substitute(
+            title=title, class_name=class_name))
+
+
 def get_file(path):
     result = op.join('site', path)
     if op.isfile(result):
