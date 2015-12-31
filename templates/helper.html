@@ -4,13 +4,13 @@
   import re
   import ast
 
-  def get_site_dirs():
+  def get_site_slugs():
     for d in os.listdir('site'):
       if op.isdir(op.join('site', d)) and d not in ('lib', 'static'):
         yield d
 
-  def get_title(dir_):
-    template_body = open(op.join('site', dir_, 'index.html')).read()
+  def get_title(slug):
+    template_body = open(op.join('site', slug, 'index.html')).read()
     code_block = re.compile(r'<%!(.*)%>', re.DOTALL).search(template_body).group(1)
     for line in code_block.strip().splitlines():
       line = line.strip()
@@ -19,15 +19,15 @@
         literal = m.group(1).strip()
         return ast.literal_eval(literal)
 
-    return dir_
+    return slug
 %>
 
 <%def name='pagelist(user, proj)'>
   <ul>
-  % for dir_ in get_site_dirs():
+  % for slug in get_site_slugs():
     <li>
-      <a href='${dir_}/'>${get_title(dir_)}</a>
-      (<a href='https://github.com/${user}/${proj}/tree/master/site/${dir_}'>source</a>)
+      <a href='${slug}/'>${get_title(slug)}</a>
+      (<a href='https://github.com/${user}/${proj}/tree/master/site/${slug}'>source</a>)
     </li>
   % endfor
   </ul>
