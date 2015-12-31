@@ -4,6 +4,12 @@ This is a boilerplate project for creating a static site that uses a lot of Java
 
 ## Installation
 
+Download the project:
+
+```
+curl -sL https://github.com/feihong/static-site-js-boilerplate/archive/master.tar.gz | tar xz
+```
+
 Install dependencies:
 
 ```
