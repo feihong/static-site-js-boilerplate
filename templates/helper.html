@@ -1,19 +1,32 @@
 <%!
   import os
   import os.path as op
+  import re
+  import ast
 
   def get_site_dirs():
     for d in os.listdir('site'):
       if op.isdir(op.join('site', d)) and d not in ('lib', 'static'):
         yield d
 
+  def get_title(dir_):
+    template_body = open(op.join('site', dir_, 'index.html')).read()
+    code_block = re.compile(r'<%!(.*)%>', re.DOTALL).search(template_body).group(1)
+    for line in code_block.strip().splitlines():
+      line = line.strip()
+      m = re.match(r'^title\s*=(.*)', line)
+      if m:
+        literal = m.group(1).strip()
+        return ast.literal_eval(literal)
+
+    return dir_
 %>
 
 <%def name='pagelist(user, proj)'>
   <ul>
   % for dir_ in get_site_dirs():
     <li>
-      <a href='${dir_}/'>${dir_}</a>
+      <a href='${dir_}/'>${get_title(dir_)}</a>
       (<a href='https://github.com/${user}/${proj}/tree/master/site/${dir_}'>source</a>)
     </li>
   % endfor
