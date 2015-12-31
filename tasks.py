@@ -3,7 +3,7 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 import bottle
 from invoke import run, task
-from pathlib2 import Path
+from pathlib2 import Path, PurePath
 
 
 GITHUB_USER = 'feihong'
@@ -146,9 +146,16 @@ def get_file(path):
     return 'site/404.html'
 
 
+def get_slug(path):
+    if path == 'site/index.html':
+        return ''
+    else:
+        return str(PurePath(path).parent.name)
+
+
 def generate(path):
     template = Template(open(path).read(), lookup=lookup, imports=IMPORTS)
-    return template.render(site=SITE, user=GITHUB_USER)
+    return template.render(site=SITE, slug=get_slug(path), user=GITHUB_USER)
 
 
 def copy_or_generate(src, dest):

@@ -22,12 +22,12 @@
     return slug
 %>
 
-<%def name='pagelist(user, proj)'>
+<%def name='pagelist(user, site)'>
   <ul>
   % for slug in get_site_slugs():
     <li>
       <a href='${slug}/'>${get_title(slug)}</a>
-      (<a href='https://github.com/${user}/${proj}/tree/master/site/${slug}'>source</a>)
+      (<a href='https://github.com/${user}${site}tree/master/site/${slug}'>source</a>)
     </li>
   % endfor
   </ul>
