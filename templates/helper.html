@@ -1,15 +1,19 @@
+<%!
+  import os
+  import os.path as op
 
-<%def name="pagelist()">
-  <%
-    import re
-    lines = capture(caller.body).strip().splitlines()
-    lines = (re.split(r';\s+', line, 1) for line in lines)
-  %>
+  def get_site_dirs():
+    for d in os.listdir('site'):
+      if op.isdir(op.join('site', d)) and d not in ('lib', 'static'):
+        yield d
 
+%>
+
+<%def name='pagelist()'>
   <ul>
-  % for slug, title in lines:
+  % for dir_ in get_site_dirs():
     <li>
-      <a href="${slug}/">${title}</a>
+      <a href='${dir_}/'>${dir_}</a>
     </li>
   % endfor
   </ul>

@@ -4,8 +4,8 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: {
-    helloworld: './site/helloworld/app.babel.js',
-    flexbox: './site/flexbox/app.babel.js',
+    'helloworld': './site/helloworld/app.babel.js',
+    'flexbox': './site/flexbox/app.babel.js',
     // This comment marks where new entry points will be added
     vendor: ['react', 'react-dom'],
   },
@@ -14,7 +14,7 @@ module.exports = {
     filename: '[name]/bundle.js'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'js/vendor.bundle.js')
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'static/js/vendor.bundle.js')
   ],
   resolve: {
     alias: {
