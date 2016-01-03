@@ -6,12 +6,15 @@
 
   def get_site_slugs():
     for d in os.listdir('site'):
-      if op.isdir(op.join('site', d)) and d not in ('lib', 'static'):
+      if op.isdir(op.join('site', d)) and op.exists(op.join('site', d, 'index.html')):
         yield d
 
   def get_title(slug):
     template_body = open(op.join('site', slug, 'index.html')).read()
-    code_block = re.compile(r'<%!(.*)%>', re.DOTALL).search(template_body).group(1)
+    match = re.compile(r'<%!(.*)%>', re.DOTALL).search(template_body)
+    if not match:
+      return slug
+    code_block = match.group(1)
     for line in code_block.strip().splitlines():
       line = line.strip()
       m = re.match(r'^title\s*=(.*)', line)
