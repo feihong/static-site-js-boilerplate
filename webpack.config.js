@@ -18,7 +18,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      lib: path.resolve('site/lib')
+      lib: path.resolve('lib')
     },
     extensions: ['', '.webpack.js', '.web.js', '.js', '.babel.js']
   },
@@ -27,7 +27,8 @@ module.exports = {
       {
         test: /\.babel\.js$/,
         include: [
-          path.resolve('site')
+          path.resolve('site'),
+          path.resolve('lib'),
         ],
         loader: 'babel',
         query: {
