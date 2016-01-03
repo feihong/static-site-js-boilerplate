@@ -36,7 +36,7 @@ def serve():
     from livereload import Server
     from livereload.watcher import Watcher
     watcher = Watcher()
-    watcher.watch('site', ignore=lambda p: p.endswith('.babel.js'))
+    watcher.watch('site', ignore=lambda p: p.endswith('.es6'))
     watcher.watch('templates')
     server = Server(app, watcher)
     server.serve(port=8000)
@@ -93,7 +93,10 @@ import {BaseComponent} from 'lib/helper'
 
 class ${class_name} extends BaseComponent {
   render() {
-    return <div>${title}</div>
+    return <button style={{borderRadius: '5px'}} onClick={this.handleClick}>${title}</button>
+  }
+  handleClick() {
+    alert('Yay!')
   }
 }
 
@@ -123,14 +126,14 @@ def new_page():
         fp.write(Template(NEW_PAGE_HTML_TEMPLATE).substitute(
             title=repr(title.strip()), template=template.strip() or 'example.html'))
 
-    js_file = new_dir / 'app.babel.js'
+    js_file = new_dir / 'app.es6'
     with js_file.open('w') as fp:
         class_name = ''.join(s.capitalize() for s in title.split(' '))
         fp.write(Template(NEW_PAGE_JS_TEMPLATE).substitute(
             title=title, class_name=class_name))
 
     marker = '// This comment marks where new entry points will be added'
-    new_entry = "'%s': './site/%s/app.babel.js'," % (slug, slug)
+    new_entry = "'%s': './site/%s/app.es6'," % (slug, slug)
     code = open('webpack.config.js').read()
     with open('webpack.config.js', 'w') as fp:
         fp.write(code.replace(marker, new_entry + '\n    ' + marker))
