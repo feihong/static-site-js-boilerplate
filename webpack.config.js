@@ -6,8 +6,6 @@ module.exports = {
   entry: {
     'helloworld': './site/helloworld/app.es6',
     'flexbox': './site/flexbox/app.es6',
-    'test-program': './site/test-program/app.es6',
-    'another-page': './site/another-page/app.es6',
     // This comment marks where new entry points will be added
     vendor: ['react', 'react-dom'],
   },
